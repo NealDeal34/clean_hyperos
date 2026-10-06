@@ -22,7 +22,8 @@
 “关机（可长按 音量上+开关键 10s中关机），音量上+开关键 长按（大概10s），Logo出来立即只松开开关键，就可以进入清除模式。”；
 
 2️⃣ 下面系统优化的操作旨在追求极限优化,续航与类原生体验,在定制厂商停止维护后解耦定制依赖,释放设备性能并为向第三方rom转型做准备,非爱好/刚需者请勿轻易尝试.
-实测优化后on REDMI K40 Gaming/Poco F3 GT 开机内存情况9.8G/12G,可压缩系统占用到3G左右,低内存设备卡顿多来源于厂商定制自启组件而非Android本身.
+
+ 实测优化后on REDMI K40 Gaming/Poco F3 GT 开机内存情况9.8G/12G,可压缩系统占用到3G左右,低内存设备卡顿多来源于厂商定制自启组件而非Android本身.
 
 3️⃣ 可以在“澎湃1、澎湃2”中使用，但此前的纯miui与之后的耦合情况可能更为复杂,请勿参考.操作前请备份手机数据到“云盘”或“手机以外的硬盘”，因为xiaomi卡米变砖任何恢复途径都会先清除数据.
 
@@ -43,6 +44,7 @@ com.miui.miwallpaper 小米壁纸（屏幕直接黑屏，任何东西都看不�
 5️⃣ 尽量使用Win、Mac的ADB环境（下载Win或Mac的ADB工具：
 https://developer.android.google.cn/tools/releases/platform-tools?hl=zh-cn 
 ）并检查miflash与usb驱动的安装和适配情况，简单优化也可使用手机端ADB软件如shizuku,adbshell与黑阈等；
+
 请检查是否已打开开发者模式的“USB调试、USB调试（安全模式）、无线调试”这3个开关.
 
 6️⃣ 澎湃2比澎湃1好用，推荐澎湃2；澎湃3比澎湃2好用，推荐澎湃3。使用本教程从2升级到3重启时可能会卡米，建议先手动备份2文件系统到电脑里面，再升级到3；
@@ -195,8 +197,9 @@ adb shell pm uninstall --user 0 com.xiaomi.security.onetrack #用户数据收集
 
 写在前面:除特殊说明外大部分可见的com.miui.*字样包名的包均可禁用/卸载,但激进操作前务必解锁bl/关闭system optimization/退出小米账号 并链接pc以便adb恢复/救砖.
 
-com.lbe.security.miui 删除后可能导致新装应用获取权限无法正常弹窗而闪退,建议保留
-com.miui.systemui.devices.overlay 是overlay中唯一比较重要的一个,删除后将引发背光异常,状态栏图标错位等问题,不建议删除
+com.lbe.security.miui  删除后可能导致新装应用获取权限无法正常弹窗而闪退,建议保留
+com.miui.systemui.devices.overlay  是miui.*.overlay中唯一比较重要的一个,删除后将引发背光异常,状态栏图标错位等问题,不建议删除
+
 过程中请连接pc并多次重启以确保不会卡米和可adb恢复.
 
 > 联发科机器“快霸（Duraspeed）”App的使用：
@@ -401,8 +404,6 @@ adb shell pm uninstall --user 0 com.miui.backup #备份（只能备份有备案�
       - 然后点击设置中的广告拦截，此时就可以点击下载拦截器了。如果下载不了（新版本需要在Google Play里面下载插件），就用直接安装广告拦截软件的APK的方法（Samsungbrowser V30.0.0 已验证）：
           - AdGuard for SamsungBrowser： https://github.com/fyonecon/clean_hyperos/releases/download/HyperOS3-20260428/AdGuard_samsung.browser_2.8.0.apk.7z （需要把“.7z”后缀直接删掉即可是对应.apk文件。）
           - ABP for SamsungBrowser：https://github.com/fyonecon/clean_hyperos/releases/download/HyperOS3-20260428/ABP_samsung.browser_2.5.7.apk.7z （需要把“.7z”后缀直接删掉即可是对应.apk文件。）
-
-## 24. Firefox、三星浏览器、Edge 添加vivo H5应用商店（ https://h5.appstore.vivo.com.cn ）到桌面快捷方式。。国内安卓应用商店的的访问规则太不稳定了，刚用没多久，网页访问就废了。。此条暂时作废。。
 
 ## 25. 这里做一个关于“国内 OAID”和“Google ADID”的说明：
 - 这两个ID都可以跨App追踪用户，实现用户“隐私与广告”跨App互通。
