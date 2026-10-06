@@ -1,13 +1,11 @@
 
 # 《小米手机系统优化对照表及说明》
 
-更新时间：2026-10-06（补充版），适配HyperOS1、HyperOS2、HyperOS3 ，可能仅限国行版。
+更新时间：2026-10-06（补充版），适配HyperOS1、HyperOS2、HyperOS3.
 
-本教程实操先优化“已开启小米系统优化”情况下的手机系统，期间或逐步对比并说明“关闭小米手机系统优化”情况下的手机系统功能变化。
+本fork test on hyperos1.0.4.0.TKJCNXM/Android13,可能具有较强特异性,用于个人备忘与数据抓取,请酌情参考.
 
-本教程旨在“彻底清除系统广告”和“彻底断绝与反诈有关的系统App（含SDK）”，清爽你的手机系统。适合将小米手机作为备用机的情况。
-
-本教程含有大量注释说明，需要花费大量时间阅读与理解。
+本教程含有大量注释说明,adb本身并不困难但最好使用ai工具辅助检索与具体评估后再进行实操.
 
 原创教程地址： https://github.com/fyonecon/clean_hyperos 。
 
@@ -17,43 +15,44 @@
 
 1️⃣ 使用前备份好手机资料；
 
+请先解锁BL或至少对线刷/ADB有基本的认识与实操;强解BL等大部分未说明步骤可参考AI进行,请保证至少有一台外置设备进行adb而非依靠shizuku搞危险操作.
+
 ⚠️卡米时可清除手机全部数据重新开始（进入卡刷机模式）：
 
 “关机（可长按 音量上+开关键 10s中关机），音量上+开关键 长按（大概10s），Logo出来立即只松开开关键，就可以进入清除模式。”；
 
-2️⃣ 下面系统优化的操作旨在“提高系统隐私（如广告SDK、反诈、大数据统计）、删除系统广告、精简系统”，不会把手机当爷一样供着、不会注重省电和延长手机使用时间（隔夜消耗4%左右的电）、不会帮助你Root破解手机、不会帮助你规避法律；
+2️⃣ 下面系统优化的操作旨在追求极限优化,续航与类原生体验,在定制厂商停止维护后解耦定制依赖,释放设备性能并为向第三方rom转型做准备,非爱好/刚需者请勿轻易尝试.
+实测优化后on REDMI K40 Gaming/Poco F3 GT 开机内存情况9.8G/12G,可压缩系统占用到3G左右,低内存设备卡顿多来源于厂商定制自启组件而非Android本身.
 
-3️⃣ 可以在“澎湃1、澎湃2”中使用，操作前请备份手机数据到“云盘”或“手机以外的硬盘”，因为小米手机卡米变砖数据会彻底丢失；
+3️⃣ 可以在“澎湃1、澎湃2”中使用，但此前的纯miui与之后的耦合情况可能更为复杂,请勿参考.操作前请备份手机数据到“云盘”或“手机以外的硬盘”，因为xiaomi卡米变砖任何恢复途径都会先清除数据.
 
 4️⃣如下情况会卡米，不要操作⚠️：
 ```
 com.android.htmlviewer HTML查看器不要卸载（重启卡米），可以停用；
 
-com.miui.packageinstaller 应用包管理器不要卸载（重启卡米）；
+com.miui.packageinstaller 应用包管理器需要先安装原生版本 adb shell cmd package install-existing --user 0 com.android.packageinstaller 否则不要卸载（重启卡米）；
 
 com.xiaomi.metoknlp 网络位置不要卸载（切换系统明暗主题时会卡米）;
 
 com.xiaomi.location.fused 小米融合位置不要卸载（切换系统明暗主题时会卡米）;
 
-com.miui.miwallpaper 小米壁纸（屏幕直接黑屏，任何东西都看不到）;
+com.miui.miwallpaper 小米壁纸（屏幕直接黑屏，任何东西都看不到）,黑屏后需要线控adb重新启动com.miui.home或第三方home同时通过原生接口重新指定壁纸,无条件不要操作;
 
 ```
 
 5️⃣ 尽量使用Win、Mac的ADB环境（下载Win或Mac的ADB工具：
 https://developer.android.google.cn/tools/releases/platform-tools?hl=zh-cn 
-），也可使用手机端ADB软件如“黑阈”；
+）并检查miflash与usb驱动的安装和适配情况，简单优化也可使用手机端ADB软件如shizuku,adbshell与黑阈等；
+请检查是否已打开开发者模式的“USB调试、USB调试（安全模式）、无线调试”这3个开关.
 
 6️⃣ 澎湃2比澎湃1好用，推荐澎湃2；澎湃3比澎湃2好用，推荐澎湃3。使用本教程从2升级到3重启时可能会卡米，建议先手动备份2文件系统到电脑里面，再升级到3；
 
-7️⃣ 虚拟内存可以关闭或只设置为扩展4G，因为使用感知不强；
+7️⃣ 虚拟内存建议关闭或只设置为刚需值,该"功能"除了低劣的营销噱头,心理安慰与大幅度降低设备RAM寿命外无任何作用,希望尽可能延长设备寿命请保持关闭
 
-8️⃣ ⚠️关于权限“应用列表”、“设备ID、广告ID”，不管你是否用HyperOS权限管理还是Android权限管理，大陆App都可能获得的到，不管你是否手动设置拒绝、是否在Play商店里下载。（微信、JD、PDD不会获得）。
 
 # 常用设置：
 
-## 0. 断网，不插卡，不开Wi-Fi，不开蓝牙，设置-锁屏-自动锁屏时间设置为5min
-
-## 1. 设置-应用-卸载所有预装应用（除了运动、录音、日历）
+## 1. 设置-应用-卸载所有可卸载的预装应用.
 
 ## 2. 设置负一屏，关闭广告，关闭卡片
 
@@ -94,49 +93,29 @@ https://developer.android.google.cn/tools/releases/platform-tools?hl=zh-cn
 
 ===自动重启手机===
 
-## 16. 导入铃声、APK（🚩可选）：
-
-给手机导入铃声：
-```
-adb push ../android_backup/Files/铃声.zip /sdcard/Documents/
-```
-
-给手机导入APK：
-```
-adb push ../android_backup/Files/APK.zip /sdcard/Documents/
-```
-
-到文件里面解压 铃声.zip 到 铃声目录 ，APK.zip到本级目录； 设置铃声<电话铃声、通知铃声、关闭锁屏声>，设置触感大小。
+## 16. 导入铃声、APK（🚩可选）：可通过搞机工具箱等便捷操作
 
 ## 16.1. 下载基础APK安装包：
 
-安装第三方提供的APK：
+安装常用APK Google版：
 >
->LibCheck： https://www.downkuai.com/android/147630.html 
+>Firefox浏览器：https://ftp.mozilla.org/pub/fenix/releases/
+安装后开启并设置cloudfalre私有doh(参考ai进行),即可规避dns污染访问https://www.apkmirror.com 下载大部分应用的官方安装包,目前Firefox是Android中唯一同时支持扩展与doh的浏览器.
 >
->DevCheck： https://www.ddooo.com/softdown/224201.htm 
+>部分应用安装需用到f-droid,apkpure或mt文件管理器
 >
->Edge浏览器： http://www.jxdown.com/soft/20238.html 
+>安装常用软件如Google play,Google service,LibCheck,DevCheck,Gboard输入法等,隐藏键值设置软件SetEdit
 >
->Firefox浏览器： https://www.ddooo.com/softdown/189287.htm 
->
-> 三星浏览器： https://www.ddooo.com/softdown/149726.htm
->
->Gboard输入法： http://www.jxdown.com/soft/42906.html
+>系统隐藏设置查找（Activity Launcher）： https://www.malavida.com/en/soft/activity-launcher/android/
 >
 >类原生桌面lawnchair： https://lawnchair.app/ （需在该App设置里手动关闭软件禁用才能设置默认桌面）
 > 
 > 如下，使用第三方软件+ADB来代替小米系统的对第三方桌面下的导航手势限制：
-> - 安装第三方手势导航软件 Ogesture（ https://github.com/tanujnotes/Ogesture ），打开该软件无障碍（先在桌面长按Ogesture的图标进入到“关于软件”-底部有三个点到按钮，打开“允许软件限制”，顺便设置电池为无限制，再打开手机设置-更多设置-无障碍-已下载应用-开启无障碍）；
-> - 打开Ogesture软件，开启手势导航 后 即可使用手势导航了；
-> - 隐藏三大金刚键（无办法，重启手机后会失效，无论adb或shizuku）。
-> 
->系统隐藏设置查找（Activity Launcher）： https://www.malavida.com/en/soft/activity-launcher/android/
+- 安装第三方手势导航软件 Ogesture（ https://github.com/tanujnotes/Ogesture ），打开该软件无障碍（先在桌面长按Ogesture的图标进入到“关于软件”-底部有三个点到按钮，打开“允许软件限制”，顺便设置电池为无限制，再打开手机设置-更多设置-无障碍-已下载应用-开启无障碍）；
+- 打开Ogesture软件，开启手势导航 后 即可使用手势导航了；
+- 隐藏导航栏三键:"adb shell settings put global force_fsg_nav_bar 1",或通过Setedit在global table中设置force_fsg_nav_bar值为1并勾选"perform this action on reboot".
 >
 > 谷歌相机： https://gcamapk.io/zh-CN/download-gcam-apk/
-> 
-
-顺便关闭“com.miui.packageinstaller #应用包管理器”到广告和安全检测功能（关闭小米系统优化时无此功能）。
 
 ## 17. 用 DevCheck 设置，（用此软件的目的是调出原生安卓设置。可选。）：
 ```
@@ -156,22 +135,6 @@ adb push ../android_backup/Files/APK.zip /sdcard/Documents/
 “com.xiaomi.bluetooth #小米蓝牙地图”，与系统蓝牙不是一回事，可能与生成蓝牙地图、物品找回有关。停用此app。
 
 ```
-
-## 18. 设置-指纹与密码-锁屏密码、录入指纹
-
-## 18.1 设置-应用-应用锁-将“系统更新”加入到应用锁
-
-## 18.2 设置-隐私-隐藏应用-右上角开启密码验证
-
-## 18.3 设置-更多设置-无障碍-（听觉-闪烁通知-选择黄色闪烁；视觉-显示大小-调到最大）
-
-## 18.4 设置-更多设置-快捷手势-（按需设置快捷键）
-
-## 18.5 设置-更多设置-账号与同步-打开“Google基础服务”。注意，os1、os2有效，os3中在小米应用商店中下载并安装“Google Play”即可完成开启Google服务。
-
-## 18.6 设置-小米账号-关于小米账号-系统广告-关闭广告
-
-## 18.7 设置-开发者模式-“App缓存优化”-打开。（这是小米官方替代“Google墓碑机制”国产App手段功能）
 
 ## 18.8 ⚠️设置-开发者模式-“系统优化”（os1、os2中可以直接看到，os3中连续点击“开发者模式-自动填充-重置为默认值”3次可以看到。）-关闭。
 > 关闭时：
@@ -230,16 +193,11 @@ adb shell pm uninstall --user 0 com.xiaomi.security.onetrack #用户数据收集
 
 ### 可删App，性能与墓碑机制：
 
-> 小米电池与性能:
-> 
-> 1.关闭锁屏自动杀应用后台功能：设置--电池--更多电池功能--锁屏后清理内存--选「从不」。这个功能是“安全中心”负责。；
-> 
-> 2.每个应用按需设置「后台联网」；
-> 
-> 3.每个应用按需设置「后台运行」（这是安卓原生权限设置）；
-> 
-> 4.有些小米系统自带应用不可设置。）
+写在前面:除特殊说明外大部分可见的com.miui.*字样包名的包均可禁用/卸载,但激进操作前务必解锁bl/关闭system optimization/退出小米账号 并链接pc以便adb恢复/救砖.
 
+com.lbe.security.miui 删除后可能导致新装应用获取权限无法正常弹窗而闪退,建议保留
+com.miui.systemui.devices.overlay 是overlay中唯一比较重要的一个,删除后将引发背光异常,状态栏图标错位等问题,不建议删除
+过程中请连接pc并多次重启以确保不会卡米和可adb恢复.
 
 > 联发科机器“快霸（Duraspeed）”App的使用：
 > 
@@ -410,8 +368,9 @@ adb shell pm uninstall --user 0 com.miui.backup #备份（只能备份有备案�
 
 ## 20. 给手机联网：
 防止手机无法使用（参考本教程的“16.1”步骤）：
-- 安装一个浏览器，比如Edge、三星浏览器、Firefox；
-- 安装一个输入法，比如GBoard、微信输入法。
+- 安装一个浏览器，比如Edge、Firefox；
+- 安装一个输入法，比如GBoard.
+- 安装一个第三方桌面.
 
 ## 21. 在小米应用商店下载“Google Play”。
 安装完成后卸载掉小米应用商店（关闭广告相关开关以后还会推送广告，必须卸载）：
@@ -429,8 +388,6 @@ adb shell pm uninstall --user 0 com.miui.backup #备份（只能备份有备案�
 
 ===（手动重启手机）===
 
-## 22. 连上VPN，在Google Play下载：
-Google电话、Google短信、Google Photo、微信、Yahoo天气、windy、Onedrive、Firefox、三星浏览器、Google Keep、Spotify等
 
 ## 23. 必备扩展：
 - 登录微信（Play版微信需要下载小程序扩展）；
@@ -465,12 +422,8 @@ Google电话、Google短信、Google Photo、微信、Yahoo天气、windy、Oned
 - 小米桌面App真的卡，一个桌面App有可能占800MB的ram，特别是在多系统用户空间下特别卡。我使用第三方桌面lawnchair https://lawnchair.app/ （需在该App设置里手动关闭软件禁用才能设置默认桌面），虽然牺牲了手势操作（启用第三方桌面小米手势就会用不了，只能用三大键，这个真的很鸡贼），但是换来了操作流畅。
 
 ## 27. 如何更新手机系统自带Webview：
-- 打开LibChecker软件 -- 找到 webview -- 选择“打开Launch” -- 选择“Webview DevTools” -- 切换到“Home” -- 点击右上三角，选择"Check for Webview updates" -- 软件自动跳到Google Play商店，点击更新即可。
-- 如果你直接打开Google Play来更新Webview，除了安装 Webview Dev 版这个办法，是不能直接更新自系统带版的，所以只能按照上面步骤曲线更新Webview。
-
-## 28. 如何安装 李跳跳（针对国产软件的快速跳过开屏广告等）：
-- 下载：https://www.downkuai.com/android/144622.html ；
-- 安装、打开 李跳跳，不做任何操作 -- 回到桌面，并长按“李跳跳”图标调出“关于” -- 在“关于”软件界面的最底部有个“···”按钮，点击并允许（这是小米拦截了软件的辅助功能，需要手动允许） -- 进入手设置里的“辅助设置Accessibility” -- “通用” -- “已下载软件” -- 打开李跳跳即可。 
+- 如果你直接打开Google Play来更新Webview，除了安装 Webview Dev 版这个办法，是不能直接更新自系统带版的，所以只能按照上面步骤曲线更新Webview.
+- 使用浏览器搜索"Android systemwebview google"并打开网页版Googleplay再跳转到应用内即可,或者直接在apkmirror下载安装包后安装,大部分不可见应用都可参考此步骤.
 
 ## 29. 开启Shizuku：
 - 安装 Shizuku（ https://github.com/RikkaApps/Shizuku/releases ）；
