@@ -1,7 +1,7 @@
 
 # 《小米手机系统优化对照表及说明》
 
-更新时间：2026-08-27（补充版），适配HyperOS1、HyperOS2、HyperOS3 ，可能仅限国行版。
+更新时间：2026-10-06（补充版），适配HyperOS1、HyperOS2、HyperOS3 ，可能仅限国行版。
 
 本教程实操先优化“已开启小米系统优化”情况下的手机系统，期间或逐步对比并说明“关闭小米手机系统优化”情况下的手机系统功能变化。
 
@@ -125,6 +125,11 @@ adb push ../android_backup/Files/APK.zip /sdcard/Documents/
 >Gboard输入法： http://www.jxdown.com/soft/42906.html
 >
 >类原生桌面lawnchair： https://lawnchair.app/ （需在该App设置里手动关闭软件禁用才能设置默认桌面）
+> 
+> 如下，使用第三方软件+ADB来代替小米系统的对第三方桌面下的导航手势限制：
+> - 安装第三方手势导航软件 Ogesture（ https://github.com/tanujnotes/Ogesture ），打开该软件无障碍（先在桌面长按Ogesture的图标进入到“关于软件”-底部有三个点到按钮，打开“允许软件限制”，顺便设置电池为无限制，再打开手机设置-更多设置-无障碍-已下载应用-开启无障碍）；
+> - 打开Ogesture软件，开启手势导航 后 即可使用手势导航了；
+> - 隐藏三大金刚键（无办法，重启手机后会失效，无论adb或shizuku）。
 > 
 >系统隐藏设置查找（Activity Launcher）： https://www.malavida.com/en/soft/activity-launcher/android/
 >
@@ -466,6 +471,13 @@ Google电话、Google短信、Google Photo、微信、Yahoo天气、windy、Oned
 ## 28. 如何安装 李跳跳（针对国产软件的快速跳过开屏广告等）：
 - 下载：https://www.downkuai.com/android/144622.html ；
 - 安装、打开 李跳跳，不做任何操作 -- 回到桌面，并长按“李跳跳”图标调出“关于” -- 在“关于”软件界面的最底部有个“···”按钮，点击并允许（这是小米拦截了软件的辅助功能，需要手动允许） -- 进入手设置里的“辅助设置Accessibility” -- “通用” -- “已下载软件” -- 打开李跳跳即可。 
+
+## 29. 开启Shizuku：
+- 安装 Shizuku（ https://github.com/RikkaApps/Shizuku/releases ）；
+- 登录小米账号com.xiaomi.account + 有安全服务com.miui.securitycenter软件；
+- 重启手机；
+- 在开发者模式的“USB调试、USB调试（安全模式）、无线调试”这3个按钮；
+- 打开 Shizuku 按照步骤完成授权。
 
 ## 29. 最后，如果玩机玩累了，请转到其他家的手机。手机里面的小心思，就这样吧。
 
